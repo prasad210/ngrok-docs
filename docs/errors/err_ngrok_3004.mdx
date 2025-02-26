@@ -1,19 +1,31 @@
----
-hide_table_of_contents: true
-displayed_sidebar: docs
----
 
-import ErrorDetails from "/src/components/ErrorDetails";
+# Fixing ERR_NGROK_3004 (ngrok Gateway Error)
 
-# ERR_NGROK_3004
-
-### Message
-
-ngrok gateway error
+## **Error Message**
+```
+ngrok gateway error  
 The server returned an invalid or incomplete HTTP response.
+```
 
-<ErrorDetails error="err_ngrok_3004" />
+## **Cause**
+This error usually happens when hosting a secure upstream service (`https://localhost:[PORT]`) but not configuring ngrok to send HTTPS traffic correctly.
 
-### Further help
+## **Solution**
+When starting ngrok, use the full upstream service address, including `https://`.  
 
-If you're having trouble resolving this error, please reach out to [support@ngrok.com](mailto:support@ngrok.com?subject=Help%20with%20ERR_NGROK_3004)
+### **For HTTPS APIs**
+If your API is running on `https://localhost:[PORT]`, use:
+```sh
+ngrok http https://localhost:[PORT] --host-header=localhost
+```
+
+### **For HTTP APIs**
+If your API is running on `http://localhost:[PORT]`, use:
+```sh
+ngrok http [PORT] --host-header=localhost
+```
+
+
+## **Further Help**
+If the issue persists, contact ngrok support: **support@ngrok.com**
+
